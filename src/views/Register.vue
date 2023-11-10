@@ -16,7 +16,7 @@
                                             <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                             <div class="form-outline flex-fill mb-0">
                                                 <label class="form-label" for="form3Example1c">Propietario:</label>
-                                                <input type="text" id="owner" class="form-control" />
+                                                <input type="text" id="owner" class="form-control" v-model="owner" />
                                             </div>
                                         </div>
 
@@ -24,21 +24,23 @@
                                             <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                             <div class="form-outline flex-fill mb-0">
                                                 <label class="form-label" for="form3Example3c">Departamento:</label>
-                                                <input type="text" id="state" class="form-control" />                                            </div>
+                                                <input type="text" id="state" class="form-control" v-model="state" />
+                                            </div>
                                         </div>
 
                                         <div class="d-flex flex-row align-items-center mb-4">
                                             <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                             <div class="form-outline flex-fill mb-0">
                                                 <label class="form-label" for="form3Example4c">Municipio:</label>
-                                                <input type="text" id="region" class="form-control" />                                            </div>
+                                                <input type="text" id="region" class="form-control" v-model="region" />
+                                            </div>
                                         </div>
 
                                         <div class="d-flex flex-row align-items-center mb-4">
                                             <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                             <div class="form-outline flex-fill mb-0">
                                                 <label class="form-label" for="form3Example4cd">Dirección:</label>
-                                                <input type="text" id="address" class="form-control" />
+                                                <input type="text" id="address" class="form-control" v-model="address" />
                                             </div>
                                         </div>
 
@@ -46,7 +48,7 @@
                                             <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                             <div class="form-outline flex-fill mb-0">
                                                 <label class="form-label" for="form3Example4cd">Correo electrónico:</label>
-                                                <input type="email" id="email" class="form-control" />
+                                                <input type="email" id="email" class="form-control" v-model="email" />
                                             </div>
                                         </div>
 
@@ -54,7 +56,8 @@
                                             <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                             <div class="form-outline flex-fill mb-0">
                                                 <label class="form-label" for="form3Example4cd">Clave:</label>
-                                                <input type="password" id="password" class="form-control" />
+                                                <input type="password" id="password" class="form-control"
+                                                    v-model="password" />
                                             </div>
                                         </div>
 
@@ -62,12 +65,14 @@
                                             <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                             <div class="form-outline flex-fill mb-0">
                                                 <label class="form-label" for="form3Example4cd">Confirmar clave:</label>
-                                                <input type="password" id="password-confirmation" class="form-control" />
+                                                <input type="password" id="password-confirmation" class="form-control"
+                                                    v-model="passwordConfirmation" />
                                             </div>
                                         </div>
 
                                         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                            <button type="button" class="btn btn-primary btn-lg">Crear cuenta</button>
+                                            <button type="button" class="btn btn-primary btn-lg" @click="registerUser">Crear
+                                                cuenta</button>
                                         </div>
 
                                     </form>
@@ -88,7 +93,76 @@
 </template>
 
 <script>
+
 export default {
     name: 'RegisterView',
+
+    data() {
+
+        return {
+
+            owner: '',
+            state: '',
+            region: '',
+            address: '',
+            email: '',
+            password: '',
+            passwordConfirmation: '',
+
+        }
+
+    },
+
+    methods: {
+
+        registerUser() {
+
+            if (this.password == this.passwordConfirmation) {
+
+                const parameters = {
+
+                    direccion: this.address,
+                    email: this.email,
+                    password: this.password,
+                    confirmpassword: this.passwordConfirmation,
+                    municipio: this.state,
+                    departamento: this.region,
+                    propietario: this.owner,
+
+                }
+
+                this.axios
+                    .post('http://capataz.api.com/api/users/create', parameters)
+                    .then((response) => {
+
+                        const { data, status } = response;
+
+                        console.log(response);
+
+                        if (status != 200) {
+
+                            console.log('Error');
+                            console.log(data.message);
+                            return;
+
+                        }
+
+                        alert(data.message);
+
+                    }).catch((error) => {
+
+                        console.log(error);
+
+                    });
+
+            } else {
+
+                alert('Las claves no son iguales');
+
+            }
+
+        }
+
+    }
 }
 </script>
