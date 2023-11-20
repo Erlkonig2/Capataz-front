@@ -210,3 +210,16 @@
     height: 50%;
 
 }
+
+/* Edit user styles */
+
+.edit-user-container {
+    width: 60%;
+    min-width: 320px;
+    margin: 10px auto 0 auto;
+}
+
+.edit-user-save {
+    width: 30% !important;
+    margin: 0 auto;
+}

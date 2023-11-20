@@ -15,7 +15,7 @@
                     <img id="nav-img" src="../assets/user-icon.png" alt="user icon" @click="showUserOptions">
                 </div>
                 <div class="user-options" v-if="userOptions">
-                    <li><i class="fa-solid fa-user-pen"></i><a href="#">Editar</a></li>
+                    <li><i class="fa-solid fa-user-pen"></i><router-link to="/user/edit">Editar</router-link></li>
                     <li @click="logout"><i class="fa-solid fa-right-from-bracket"></i><a href="#">Cerrar sesión</a></li>
                 </div>
                 <div class="menu-items">
@@ -78,12 +78,6 @@ export default {
         },
 
         logout() {
-
-            // const params = {
-
-            //     token: this.userData.token,
-
-            // };
 
             this.axios
                 .request({
