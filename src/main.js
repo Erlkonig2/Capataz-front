@@ -7,4 +7,4 @@ import VueAxios from 'vue-axios';
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
 
-createApp(App).use(router).use(VueAxios, axios).use(router).mount('#app')
+createApp(App).use(router).use(VueAxios, axios).mount('#app')
