@@ -12,20 +12,24 @@
                     <p>Capataz</p>
                 </div>
                 <div class="logo">
-                    <img id="nav-img" src="../assets/user-icon.png" alt="user icon">
+                    <img id="nav-img" src="../assets/user-icon.png" alt="user icon" @click="showUserOptions">
+                </div>
+                <div class="user-options" v-if="userOptions">
+                    <li><i class="fa-solid fa-user-pen"></i><a href="#">Editar</a></li>
+                    <li @click="logout"><i class="fa-solid fa-right-from-bracket"></i><a href="#">Cerrar sesión</a></li>
                 </div>
                 <div class="menu-items">
-                    <li><a href="#">Inicio</a></li>
-                    <li><a href="#">Predios</a></li>
-                    <li><a href="#">Cultivos</a></li>
-                    <li><a href="#">Empleados</a></li>
-                    <li><a href="#">Herramientas</a></li>
-                    <li><a href="#">Asignar tareas</a></li>
-                    <li><a href="#">Labores</a></li>
-                    <li><a href="#">Recolección de café</a></li>
-                    <li><a href="#">Préstamo herramientas</a></li>
-                    <li><a href="#">Inventario</a></li>
-                    <li><a href="#">Nomina</a></li>
+                    <li><i class="fa-solid fa-house"></i><a href="#">Inicio</a></li>
+                    <li><i class="fa-solid fa-map-location-dot"></i><a href="#">Predios</a></li>
+                    <li><i class="fa-solid fa-droplet"></i><a href="#">Cultivos</a></li>
+                    <li><i class="fa-solid fa-child"></i><a href="#">Empleados</a></li>
+                    <li><i class="fa-solid fa-wrench"></i><a href="#">Herramientas</a></li>
+                    <li><i class="fa-solid fa-user-pen"></i><a href="#">Asignar tareas</a></li>
+                    <li><i class="fa-solid fa-clipboard-list"></i><a href="#">Labores</a></li>
+                    <li><i class="fa-solid fa-box"></i><a href="#">Recolección de café</a></li>
+                    <li><i class="fa-solid fa-screwdriver-wrench"></i><a href="#">Préstamo herramientas</a></li>
+                    <li><i class="fa-solid fa-boxes-stacked"></i><a href="#">Inventario</a></li>
+                    <li><i class="fa-solid fa-money-bills"></i><a href="#">Nomina</a></li>
                 </div>
             </div>
         </div>
@@ -35,11 +39,23 @@
 export default {
     name: 'NavBar',
 
+    props: {
+
+        userData: {
+
+            type: Object,
+            required: true,
+
+        },
+
+    },
+
     data() {
 
         return {
 
             menuActive: false,
+            userOptions: false,
 
         }
 
@@ -54,6 +70,53 @@ export default {
             this.$emit('hide-main-container', this.menuActive);
 
         },
+
+        showUserOptions() {
+
+            this.userOptions = !this.userOptions;
+
+        },
+
+        logout() {
+
+            // const params = {
+
+            //     token: this.userData.token,
+
+            // };
+
+            this.axios
+                .request({
+                    headers: {
+                        Authorization: `Bearer ${this.userData.token}`
+                    },
+                    method: 'GET',
+                    url: 'http://capataz.api.com:8080/api/users/logoutUser',
+                })
+                .then((response) => {
+
+                    const { data } = response;
+
+                    alert(data.Message);
+
+                    document.cookie = 'user=' + JSON.stringify(data.User);
+                    document.cookie = `role=${data.Role}`;
+                    document.cookie = `token=${data.Token}`;
+
+                    setTimeout(() => {
+
+                        window.location.href = 'http://localhost:8081/login';
+
+                    }, 3000);
+
+                }).catch((error) => {
+
+                    console.log(error);
+                    alert('Algo ha salido mal...');
+
+                });
+
+        }
 
     }
 }

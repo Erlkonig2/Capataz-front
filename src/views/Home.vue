@@ -1,6 +1,8 @@
 <template>
     <section>
-        <NavBar @hide-main-container="hideMainContainer"></NavBar>
+        <NavBar @hide-main-container="hideMainContainer"
+                :user-data="sessionData">
+        </NavBar>
 
         <main id="main-container" v-if="!hideMain">
             <div>
@@ -25,6 +27,7 @@ export default {
         return {
 
             hideMain: false,
+            sessionData: {},
 
         }
 
@@ -34,19 +37,15 @@ export default {
 
         const cookiesStrings = document.cookie.split('; ');
 
-        let cookiesList = {};
-
         cookiesStrings.forEach((cookie) => {
 
             const cookieValues = cookie.split('=');
 
-            cookiesList[cookieValues[0]] = cookieValues[1];
+            this.sessionData[cookieValues[0]] = cookieValues[1];
 
         })
 
-        console.log(cookiesList.role);
-
-        if (cookiesList.token === undefined) {
+        if (this.sessionData.token === undefined || this.sessionData.token === 'undefined') {
 
             window.location.href = 'http://localhost:8081/login';
 
