@@ -13,7 +13,7 @@
                                     <form class="mx-1 mx-md-4">
 
                                         <div class="d-flex flex-row align-items-center mb-4">
-                                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                            <i class="fas fa-user fa-lg me-3 fa-fw register-icon"></i>
                                             <div class="form-outline flex-fill mb-0">
                                                 <label class="form-label" for="form3Example1c">Propietario:</label>
                                                 <input type="text" id="owner" class="form-control" v-model="owner" />
@@ -21,7 +21,7 @@
                                         </div>
 
                                         <div class="d-flex flex-row align-items-center mb-4">
-                                            <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                            <i class="fa-solid fa-map fa-lg me-3 fa-fw register-icon"></i>
                                             <div class="form-outline flex-fill mb-0">
                                                 <label class="form-label" for="form3Example3c">Departamento:</label>
                                                 <input type="text" id="state" class="form-control" v-model="state" />
@@ -29,7 +29,7 @@
                                         </div>
 
                                         <div class="d-flex flex-row align-items-center mb-4">
-                                            <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                            <i class="fa-solid fa-map-pin fa-lg me-3 fa-fw register-icon"></i>
                                             <div class="form-outline flex-fill mb-0">
                                                 <label class="form-label" for="form3Example4c">Municipio:</label>
                                                 <input type="text" id="region" class="form-control" v-model="region" />
@@ -37,7 +37,7 @@
                                         </div>
 
                                         <div class="d-flex flex-row align-items-center mb-4">
-                                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                            <i class="fa-solid fa-location-crosshairs fa-lg me-3 fa-fw register-icon"></i>
                                             <div class="form-outline flex-fill mb-0">
                                                 <label class="form-label" for="form3Example4cd">Dirección:</label>
                                                 <input type="text" id="address" class="form-control" v-model="address" />
@@ -45,7 +45,7 @@
                                         </div>
 
                                         <div class="d-flex flex-row align-items-center mb-4">
-                                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                            <i class="fa-solid fa-at fa-lg me-3 fa-fw register-icon"></i>
                                             <div class="form-outline flex-fill mb-0">
                                                 <label class="form-label" for="form3Example4cd">Correo electrónico:</label>
                                                 <input type="email" id="email" class="form-control" v-model="email" />
@@ -53,7 +53,7 @@
                                         </div>
 
                                         <div class="d-flex flex-row align-items-center mb-4">
-                                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                            <i class="fas fa-key fa-lg me-3 fa-fw register-icon"></i>
                                             <div class="form-outline flex-fill mb-0">
                                                 <label class="form-label" for="form3Example4cd">Clave:</label>
                                                 <input type="password" id="password" class="form-control"
@@ -62,7 +62,7 @@
                                         </div>
 
                                         <div class="d-flex flex-row align-items-center mb-4">
-                                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                            <i class="fas fa-key fa-lg me-3 fa-fw register-icon"></i>
                                             <div class="form-outline flex-fill mb-0">
                                                 <label class="form-label" for="form3Example4cd">Confirmar clave:</label>
                                                 <input type="password" id="password-confirmation" class="form-control"
