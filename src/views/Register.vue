@@ -119,6 +119,13 @@ export default {
 
             if (this.password == this.passwordConfirmation) {
 
+                if (this.password.length < 8) {
+
+                    alert('La clave debe tener mínimo 8 carácteres');
+                    return;
+
+                }
+
                 const parameters = {
 
                     direccion: this.address,
@@ -132,22 +139,29 @@ export default {
                 }
 
                 this.axios
-                    .post('http://capataz.api.com/api/users/create', parameters)
+                    .post('http://capataz.api.com:8080/api/users/create', parameters)
                     .then((response) => {
 
                         const { data, status } = response;
 
-                        console.log(response);
-
                         if (status != 200) {
 
-                            console.log('Error');
-                            console.log(data.message);
+                            alert('Algo salió mal durante la operación...');
                             return;
 
                         }
 
-                        alert(data.message);
+                        alert(data.Message);
+
+                        document.cookie = 'user=' + JSON.stringify(data.User);
+                        document.cookie = `role=${data.Role}`;
+                        document.cookie = `token=${data.Token}`;
+
+                        setTimeout(() => {
+
+                            window.location.href = 'http://localhost:8081/home';
+
+                        }, 3000);
 
                     }).catch((error) => {
 
