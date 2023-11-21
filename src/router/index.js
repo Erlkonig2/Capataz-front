@@ -4,6 +4,7 @@ import LoginView from "@/views/Login.vue";
 import RegisterView from "@/views/Register.vue";
 import HomeView from "@/views/Home.vue";
 import EditUser from "@/views/EditUser.vue";
+import LotesIndexView from "@/views/LotesIndex.vue";
 
 const routes = [
     {
@@ -16,7 +17,11 @@ const routes = [
       name: "Login",
       component: LoginView,
     },
-
+    {
+      path: "/",
+      name: "dashboard",
+      component: HomeView,
+    },
     {
       path: "/home",
       name: "Home",
@@ -26,6 +31,11 @@ const routes = [
       path: "/user/edit",
       name: "EditUser",
       component: EditUser,
+    },
+    {
+      path: "/lotes",
+      name: "LotesIndexView",
+      component: LotesIndexView,
     }
   ];
 

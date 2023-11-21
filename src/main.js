@@ -7,4 +7,11 @@ import VueAxios from 'vue-axios';
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
 
-createApp(App).use(router).use(VueAxios, axios).mount('#app')
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
+createApp(App)
+    .use(router)
+    .use(VueAxios, axios)
+    .use(VueSweetalert2)
+    .mount('#app')
