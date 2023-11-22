@@ -19,8 +19,8 @@
                     <li @click="logout"><i class="fa-solid fa-right-from-bracket"></i><a href="#">Cerrar sesión</a></li>
                 </div>
                 <div class="menu-items">
-                    <li><i class="fa-solid fa-house"></i><a href="#">Inicio</a></li>
-                    <li><i class="fa-solid fa-map-location-dot"></i><a href="#">Predios</a></li>
+                    <li><i class="fa-solid fa-house"></i><router-link to="/">Inicio</router-link></li>
+                    <li><i class="fa-solid fa-map-location-dot"></i><router-link to="/lotes">Predios</router-link></li>
                     <li><i class="fa-solid fa-droplet"></i><a href="#">Cultivos</a></li>
                     <li><i class="fa-solid fa-child"></i><a href="#">Empleados</a></li>
                     <li><i class="fa-solid fa-wrench"></i><a href="#">Herramientas</a></li>
