@@ -4,14 +4,8 @@
     <main id="index-main" v-if="!hideMain">
         <div class="wrap">
             <div class="row">
-                <div class="col-12 col-md-6 mb-3">
-                    <div class="form-group d-flex flex-column align-items-start">
-                        <input type="number" class="form-control" id="lot-id" v-model="lotId" @input="searchLotId">
-                        <label class="form-label" for="lot-id">Buscar</label>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 mb-3">
-                    <button class="btn btn-primary">Crear</button>
+                <div class="col-12 mb-3 d-flex justify-content-center">
+                    <button class="btn btn-primary" @click="openModalMgrLot(false)">Crear</button>
                 </div>
                 <div class="col-12 mb-3 table-responsive">
                     <table class="table table-striped align-middle">
@@ -31,7 +25,7 @@
                                 <td>{{ lot.Nombre }}</td>
                                 <td>{{ lot.Tamano }}</td>
                                 <td>
-                                    <button class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="btn btn-success" @click="openModalMgrLot(true, lot.id)"><i class="fa-solid fa-pen-to-square"></i></button>
                                     <button class="btn btn-danger" @click="deleteLot(lot.id)"><i class="fa-solid fa-trash"></i></button>
                                 </td>
                             </tr>
@@ -41,13 +35,44 @@
             </div>
         </div>
     </main>
+    <!-- Inicio Modal Lotes -->
+    <div id="modalMgrLot" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title tit-top-mod">
+                            <span v-if="mgrLotType == 'C'">Crear</span>
+                            <span v-if="mgrLotType == 'E'">Editar</span>
+                            Lote
+                        </h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            @click.prevent="resetMgrLotData()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-12">
+                            <LotManagerComponent v-if="mgrLotModalLoaded"
+                                               :local-type="mgrLotType"
+                                               :lot-id="mgrLotId"
+                                               :token="sessionData.token"
+                                               @onUpdateCreate="getLots">
+                            </LotManagerComponent>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin Modal Lotes -->
 </template>
 <script>
 import NavBar from '../components/NavBar.vue';
+import LotManagerComponent from '../components/LotManagerComponent.vue';
 import '../assets/style.css';
+import bootstrap from "bootstrap/dist/js/bootstrap.js";
 
 export default {
-    components: { NavBar },
+    components: { NavBar, LotManagerComponent },
 
     name: 'LoteIndexView',
 
@@ -60,6 +85,11 @@ export default {
 
             lotsList: [],
             lotId: null,
+            mgrLotType: 'C',
+            mgrLotModalLoaded: false,
+            mgrLotId: 0,
+
+            modal: {},
 
         }
 
@@ -84,6 +114,8 @@ export default {
         }
 
         this.getLots();
+
+        this.modal = new bootstrap.Modal(document.querySelector('#modalMgrLot'), {});
 
     },
 
@@ -202,7 +234,46 @@ export default {
                 }
             });
 
-        }
+        },
+
+        openModalMgrLot(edit = false, lotId) {
+
+            if (edit) {
+
+                this.mgrLotModalLoaded = false;
+                this.mgrLotType = 'E';
+                this.mgrLotId = lotId;
+
+            } else {
+
+                this.mgrLotModalLoaded = false;
+                this.mgrLotType = 'C';
+
+            }
+
+            setTimeout(() => {
+
+                this.mgrLotModalLoaded = true;
+                this.modal.show();
+
+            }, 500);
+
+        },
+
+        resetMgrLotData() {
+
+            if (this.mgrLotType == 'E') {
+
+                this.mgrLotModalLoaded = false;
+
+            }
+
+            this.mgrLotType = 'C';
+            this.mgrLotId = 0;
+
+            this.modal.hide();
+
+        },
 
     }
 
