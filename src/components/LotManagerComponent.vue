@@ -13,7 +13,7 @@
             <div class="col-12 mb-3">
                 <div class="form-group">
                     <label class="form-label" for="size">Tamaño:</label>
-                    <input type="text"
+                    <input type="number"
                             class="form-control"
                             id="size"
                             placeholder="Tamaño"

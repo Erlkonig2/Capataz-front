@@ -5,6 +5,7 @@ import RegisterView from "@/views/Register.vue";
 import HomeView from "@/views/Home.vue";
 import EditUser from "@/views/EditUser.vue";
 import LotesIndexView from "@/views/LotesIndex.vue";
+import CropsIndexView from "@/views/CropsIndex.vue";
 
 const routes = [
     {
@@ -36,6 +37,11 @@ const routes = [
       path: "/lotes",
       name: "LotesIndexView",
       component: LotesIndexView,
+    },
+    {
+      path: '/cultivos',
+      name: 'CropsIndexView',
+      component: CropsIndexView,
     }
   ];
 
