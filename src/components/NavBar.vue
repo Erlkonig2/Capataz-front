@@ -25,7 +25,7 @@
                     <li><i class="fa-solid fa-child"></i><router-link to="/empleados">Empleados</router-link></li>
                     <li><i class="fa-solid fa-wrench"></i><router-link to="/herramientas">Herramientas</router-link></li>
                     <li><i class="fa-solid fa-user-pen"></i><a href="#">Asignar tareas</a></li>
-                    <li><i class="fa-solid fa-clipboard-list"></i><a href="#">Labores</a></li>
+                    <li><i class="fa-solid fa-clipboard-list"></i><router-link to="/labores">Labores</router-link></li>
                     <li><i class="fa-solid fa-box"></i><a href="#">Recolección de café</a></li>
                     <li><i class="fa-solid fa-screwdriver-wrench"></i><a href="#">Préstamo herramientas</a></li>
                     <li><i class="fa-solid fa-boxes-stacked"></i><a href="#">Inventario</a></li>
