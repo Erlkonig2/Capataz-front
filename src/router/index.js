@@ -7,6 +7,7 @@ import EditUser from "@/views/EditUser.vue";
 import LotesIndexView from "@/views/LotesIndex.vue";
 import CropsIndexView from "@/views/CropsIndex.vue";
 import EmployeesIndexView from "@/views/EmployeesIndex.vue";
+import ToolsIndexView from "@/views/ToolsIndex.vue";
 
 const routes = [
     {
@@ -48,6 +49,11 @@ const routes = [
       path: '/empleados',
       name: 'EmployeesView',
       component: EmployeesIndexView,
+    },
+    {
+      path: '/herramientas',
+      name: 'ToolsView',
+      component: ToolsIndexView,
     }
   ];
 

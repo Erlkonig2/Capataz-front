@@ -5,7 +5,7 @@
         <div class="wrap">
             <div class="row">
                 <div class="col-12 mb-3 d-flex justify-content-center">
-                    <button class="btn btn-primary" @click="openModalMgrEmployee(false)">Crear</button>
+                    <button class="btn btn-primary" @click="openModalMgrTool(false)">Crear</button>
                 </div>
                 <div class="col-12 mb-3 table-responsive">
                     <table class="table table-striped align-middle">
@@ -13,22 +13,22 @@
                             <tr>
                                 <th scope="col">Id</th>
                                 <th scope="col">Nombre</th>
-                                <th scope="col">Documento</th>
-                                <th scope="col">Edad</th>
-                                <th scope="col">Correo</th>
+                                <th scope="col">Fabricante</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Fecha de compra</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(employee, index) in employeesList" :key="index">
-                                <td>{{ employee.id }}</td>
-                                <td>{{ employee.nombre }}</td>
-                                <td>{{ employee.documento }}</td>
-                                <td>{{ employee.edad }}</td>
-                                <td>{{ employee.email }}</td>
+                            <tr v-for="(tool, index) in toolsList" :key="index">
+                                <td>{{ tool.id }}</td>
+                                <td>{{ tool.Nombre }}</td>
+                                <td>{{ tool.Fabricante }}</td>
+                                <td>{{ tool.Cantidad }}</td>
+                                <td>{{ tool.FechaDeCompra }}</td>
                                 <td>
-                                    <button class="btn btn-success" @click="openModalMgrEmployee(true, employee.id)"><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button class="btn btn-danger" @click="deleteEmployee(employee.id)"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="btn btn-success" @click="openModalMgrTool(true, tool.id)"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="btn btn-danger" @click="deleteTool(tool.id)"><i class="fa-solid fa-trash"></i></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -37,44 +37,44 @@
             </div>
         </div>
     </main>
-    <!-- Inicio Modal Empleados -->
-    <div id="modalMgrEmployee" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <!-- Inicio Modal Herramientas -->
+    <div id="modalMgrTool" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="modal-title tit-top-mod">
-                            <span v-if="mgrEmployeeType == 'C'">Registrar</span>
-                            <span v-if="mgrEmployeeType == 'E'">Editar</span>
-                            Empleado
+                            <span v-if="mgrToolType == 'C'">Registrar</span>
+                            <span v-if="mgrToolType == 'E'">Editar</span>
+                            Herramienta
                         </h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                            @click.prevent="resetMgrEmployee()">
+                            @click.prevent="resetMgrTool()">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="col-12">
-                            <EmployeesManagerComponent v-if="mgrEmployeeModalLoaded"
-                                               :local-type="mgrEmployeeType"
-                                               :employee-id="mgrEmployeeId"
+                            <ToolManagerComponent v-if="mgrToolModalLoaded"
+                                               :local-type="mgrToolType"
+                                               :tool-id="mgrToolId"
                                                :token="sessionData.token"
-                                               @onUpdateCreate="getEmployees">
-                            </EmployeesManagerComponent>
+                                               @onUpdateCreate="getTools">
+                            </ToolManagerComponent>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Fin Modal Empleados -->
+        <!-- Fin Modal Herramientas -->
 </template>
 <script>
 import NavBar from '../components/NavBar.vue';
-import EmployeesManagerComponent from '../components/EmployeesManagerComponent.vue';
+import ToolManagerComponent from '../components/ToolManagerComponent.vue';
 import '../assets/style.css';
 import bootstrap from "bootstrap/dist/js/bootstrap.js";
 
 export default {
-    components: { NavBar, EmployeesManagerComponent },
+    components: { NavBar, ToolManagerComponent },
 
     name: 'EmployeesIndexView',
 
@@ -85,11 +85,11 @@ export default {
             hideMain: false,
             sessionData: {},
 
-            employeesList: [],
-            employeeId: null,
-            mgrEmployeeType: 'C',
-            mgrEmployeeModalLoaded: false,
-            mgrEmployeeId: 0,
+            toolsList: [],
+            toolId: null,
+            mgrToolType: 'C',
+            mgrToolModalLoaded: false,
+            mgrToolId: 0,
 
             modal: {},
 
@@ -115,9 +115,9 @@ export default {
 
         }
 
-        this.getEmployees();
+        this.getTools();
 
-        this.modal = new bootstrap.Modal(document.querySelector('#modalMgrEmployee'), {});
+        this.modal = new bootstrap.Modal(document.querySelector('#modalMgrTool'), {});
 
     },
 
@@ -129,7 +129,7 @@ export default {
 
         },
 
-        getEmployees() {
+        getTools() {
 
             this.axios
                 .request({
@@ -137,12 +137,12 @@ export default {
                         Authorization: `Bearer ${this.sessionData.token}`
                     },
                     method: 'GET',
-                    url: 'http://capataz.api.com:8080/api/empleados',
+                    url: 'http://capataz.api.com:8080/api/herramientas',
                 }).then((response) => {
 
                     const { data } = response;
 
-                    this.employeesList = data.map((employee) => employee);
+                    this.toolsList = data;
 
                 }).catch(() => {
 
@@ -152,12 +152,12 @@ export default {
 
         },
 
-        deleteEmployee(id) {
+        deleteTool(id) {
 
             this.$swal({
 
-                title: "Borrar Empleado",
-                text: "¿Seguro de que desea eliminar este empleado?",
+                title: "Borrar Herramienta",
+                text: "¿Seguro de que desea eliminar esta herramienta?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: '#106cc8',
@@ -174,7 +174,7 @@ export default {
                                 Authorization: `Bearer ${this.sessionData.token}`
                             },
                             method: 'DELETE',
-                            url: `http://capataz.api.com:8080/api/empleados/${id}`,
+                            url: `http://capataz.api.com:8080/api/herramientas/${id}`,
                         }).then((response) => {
 
                             const { data } = response;
@@ -191,7 +191,7 @@ export default {
 
                                 if (result.value) {
 
-                                    this.getEmployees();
+                                    this.getTools();
 
                                 }
 
@@ -208,40 +208,40 @@ export default {
 
         },
 
-        openModalMgrEmployee(edit = false, employeeId) {
+        openModalMgrTool(edit = false, employeeId) {
 
             if (edit) {
 
-                this.mgrEmployeeModalLoaded = false;
-                this.mgrEmployeeType = 'E';
-                this.mgrEmployeeId = employeeId;
+                this.mgrToolModalLoaded = false;
+                this.mgrToolType = 'E';
+                this.mgrToolId = employeeId;
 
             } else {
 
-                this.mgrEmployeeModalLoaded = false;
-                this.mgrEmployeeType = 'C';
+                this.mgrToolModalLoaded = false;
+                this.mgrToolType = 'C';
 
             }
 
             setTimeout(() => {
 
-                this.mgrEmployeeModalLoaded = true;
+                this.mgrToolModalLoaded = true;
                 this.modal.show();
 
             }, 500);
 
         },
 
-        resetMgrEmployee() {
+        resetMgrTool() {
 
-            if (this.mgrEmployeeType == 'E') {
+            if (this.mgrToolType == 'E') {
 
-                this.mgrEmployeeModalLoaded = false;
+                this.mgrToolModalLoaded = false;
 
             }
 
-            this.mgrEmployeeType = 'C';
-            this.mgrEmployeeId = 0;
+            this.mgrToolType = 'C';
+            this.mgrToolId = 0;
 
             this.modal.hide();
 
