@@ -5,7 +5,7 @@
         <div class="wrap">
             <div class="row">
                 <div class="col-12 mb-3 d-flex justify-content-center">
-                    <button class="btn btn-primary" @click="openModalMgrTool(false)">Crear</button>
+                    <button class="btn btn-primary" @click="openModalMgrTask(false)">Crear</button>
                 </div>
                 <div class="col-12 mb-3 table-responsive">
                     <table class="table table-striped align-middle">
@@ -13,22 +13,16 @@
                             <tr>
                                 <th scope="col">Id</th>
                                 <th scope="col">Nombre</th>
-                                <th scope="col">Fabricante</th>
-                                <th scope="col">Cantidad</th>
-                                <th scope="col">Fecha de compra</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(tool, index) in toolsList" :key="index">
-                                <td>{{ tool.id }}</td>
-                                <td>{{ tool.Nombre }}</td>
-                                <td>{{ tool.Fabricante }}</td>
-                                <td>{{ tool.Cantidad }}</td>
-                                <td>{{ tool.FechaDeCompra }}</td>
+                            <tr v-for="(task, index) in tasksList" :key="index">
+                                <td>{{ task.id }}</td>
+                                <td>{{ task.Nombre }}</td>
                                 <td>
-                                    <button class="btn btn-success" @click="openModalMgrTool(true, tool.id)"><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button class="btn btn-danger" @click="deleteTool(tool.id)"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="btn btn-success" @click="openModalMgrTask(true, task.id)"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="btn btn-danger" @click="deleteTask(task.id)"><i class="fa-solid fa-trash"></i></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -37,46 +31,46 @@
             </div>
         </div>
     </main>
-    <!-- Inicio Modal Herramientas -->
-    <div id="modalMgrTool" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <!-- Inicio Modal Labores -->
+    <div id="modalMgrTask" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="modal-title tit-top-mod">
-                            <span v-if="mgrToolType == 'C'">Registrar</span>
-                            <span v-if="mgrToolType == 'E'">Editar</span>
-                            Herramienta
+                            <span v-if="mgrTaskType == 'C'">Registrar</span>
+                            <span v-if="mgrTaskType == 'E'">Editar</span>
+                            Labor
                         </h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                            @click.prevent="resetMgrTool()">
+                            @click.prevent="resetMgrTask()">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="col-12">
-                            <ToolManagerComponent v-if="mgrToolModalLoaded"
-                                               :local-type="mgrToolType"
-                                               :tool-id="mgrToolId"
+                            <TaskManagerComponent v-if="mgrTaskModalLoaded"
+                                               :local-type="mgrTaskType"
+                                               :task-id="mgrTaskId"
                                                :token="sessionData.token"
-                                               @onUpdateCreate="getTools">
-                            </ToolManagerComponent>
+                                               @onUpdateCreate="getTasks">
+                            </TaskManagerComponent>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Fin Modal Herramientas -->
+        <!-- Fin Modal Labores -->
 </template>
 <script>
 import NavBar from '../components/NavBar.vue';
-import ToolManagerComponent from '../components/ToolManagerComponent.vue';
+import TaskManagerComponent from '../components/TaskManagerComponent.vue';
 import '../assets/style.css';
 import bootstrap from "bootstrap/dist/js/bootstrap.js";
 
 export default {
-    components: { NavBar, ToolManagerComponent },
+    components: { NavBar, TaskManagerComponent },
 
-    name: 'ToolsIndexView',
+    name: 'EmployeesIndexView',
 
     data() {
 
@@ -85,11 +79,11 @@ export default {
             hideMain: false,
             sessionData: {},
 
-            toolsList: [],
-            toolId: null,
-            mgrToolType: 'C',
-            mgrToolModalLoaded: false,
-            mgrToolId: 0,
+            tasksList: [],
+            taskId: null,
+            mgrTaskType: 'C',
+            mgrTaskModalLoaded: false,
+            mgrTaskId: 0,
 
             modal: {},
 
@@ -115,9 +109,9 @@ export default {
 
         }
 
-        this.getTools();
+        this.getTasks();
 
-        this.modal = new bootstrap.Modal(document.querySelector('#modalMgrTool'), {});
+        this.modal = new bootstrap.Modal(document.querySelector('#modalMgrTask'), {});
 
     },
 
@@ -129,7 +123,7 @@ export default {
 
         },
 
-        getTools() {
+        getTasks() {
 
             this.axios
                 .request({
@@ -137,12 +131,12 @@ export default {
                         Authorization: `Bearer ${this.sessionData.token}`
                     },
                     method: 'GET',
-                    url: 'http://capataz.api.com:8080/api/herramientas',
+                    url: 'http://capataz.api.com:8080/api/labores',
                 }).then((response) => {
 
                     const { data } = response;
 
-                    this.toolsList = data;
+                    this.tasksList = data;
 
                 }).catch(() => {
 
@@ -152,12 +146,12 @@ export default {
 
         },
 
-        deleteTool(id) {
+        deleteTask(id) {
 
             this.$swal({
 
-                title: "Borrar Herramienta",
-                text: "¿Seguro de que desea eliminar esta herramienta?",
+                title: "Borrar Labor",
+                text: "¿Seguro de que desea eliminar esta Labor?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: '#106cc8',
@@ -174,7 +168,7 @@ export default {
                                 Authorization: `Bearer ${this.sessionData.token}`
                             },
                             method: 'DELETE',
-                            url: `http://capataz.api.com:8080/api/herramientas/${id}`,
+                            url: `http://capataz.api.com:8080/api/labores/${id}`,
                         }).then((response) => {
 
                             const { data } = response;
@@ -191,7 +185,7 @@ export default {
 
                                 if (result.value) {
 
-                                    this.getTools();
+                                    this.getTasks();
 
                                 }
 
@@ -208,40 +202,40 @@ export default {
 
         },
 
-        openModalMgrTool(edit = false, toolId) {
+        openModalMgrTask(edit = false, taskId) {
 
             if (edit) {
 
-                this.mgrToolModalLoaded = false;
-                this.mgrToolType = 'E';
-                this.mgrToolId = toolId;
+                this.mgrTaskModalLoaded = false;
+                this.mgrTaskType = 'E';
+                this.mgrTaskId = taskId;
 
             } else {
 
-                this.mgrToolModalLoaded = false;
-                this.mgrToolType = 'C';
+                this.mgrTaskModalLoaded = false;
+                this.mgrTaskType = 'C';
 
             }
 
             setTimeout(() => {
 
-                this.mgrToolModalLoaded = true;
+                this.mgrTaskModalLoaded = true;
                 this.modal.show();
 
             }, 500);
 
         },
 
-        resetMgrTool() {
+        resetMgrTask() {
 
-            if (this.mgrToolType == 'E') {
+            if (this.mgrTaskType == 'E') {
 
-                this.mgrToolModalLoaded = false;
+                this.mgrTaskModalLoaded = false;
 
             }
 
-            this.mgrToolType = 'C';
-            this.mgrToolId = 0;
+            this.mgrTaskType = 'C';
+            this.mgrTaskId = 0;
 
             this.modal.hide();
 
