@@ -6,6 +6,7 @@ import HomeView from "@/views/Home.vue";
 import EditUser from "@/views/EditUser.vue";
 import LotesIndexView from "@/views/LotesIndex.vue";
 import CropsIndexView from "@/views/CropsIndex.vue";
+import EmployeesIndexView from "@/views/EmployeesIndex.vue";
 
 const routes = [
     {
@@ -42,6 +43,11 @@ const routes = [
       path: '/cultivos',
       name: 'CropsIndexView',
       component: CropsIndexView,
+    },
+    {
+      path: '/empleados',
+      name: 'EmployeesView',
+      component: EmployeesIndexView,
     }
   ];
 
