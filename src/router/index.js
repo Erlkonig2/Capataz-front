@@ -11,6 +11,7 @@ import ToolsIndexView from "@/views/ToolsIndex.vue";
 import TasksIndexView from "@/views/TasksIndex.vue";
 import BorrowsIndexView from "@/views/BorrowsIndex.vue";
 import TaskAssignmentIndexView from "@/views/TaskAssignmentIndex.vue";
+import RecollectionIndexView from "@/views/RecollectionIndex.vue";
 
 const routes = [
     {
@@ -72,6 +73,11 @@ const routes = [
       path: '/tareas',
       name: 'TasksAssignmentsView',
       component: TaskAssignmentIndexView,
+    },
+    {
+      path: '/recoleccion',
+      name: 'RecollectionIndexView',
+      component: RecollectionIndexView,
     }
   ];
 
