@@ -10,6 +10,7 @@ import EmployeesIndexView from "@/views/EmployeesIndex.vue";
 import ToolsIndexView from "@/views/ToolsIndex.vue";
 import TasksIndexView from "@/views/TasksIndex.vue";
 import BorrowsIndexView from "@/views/BorrowsIndex.vue";
+import TaskAssignmentIndexView from "@/views/TaskAssignmentIndex.vue";
 
 const routes = [
     {
@@ -66,6 +67,11 @@ const routes = [
       path: '/prestamos',
       name: 'BorrowsView',
       component: BorrowsIndexView,
+    },
+    {
+      path: '/tareas',
+      name: 'TasksAssignmentsView',
+      component: TaskAssignmentIndexView,
     }
   ];
 

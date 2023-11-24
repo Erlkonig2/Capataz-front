@@ -163,12 +163,6 @@ export default {
 
         },
 
-        employeeSelected(employee) {
-
-            console.log(employee);
-
-        },
-
         getEmployees() {
 
             this.axios
