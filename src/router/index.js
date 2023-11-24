@@ -9,6 +9,7 @@ import CropsIndexView from "@/views/CropsIndex.vue";
 import EmployeesIndexView from "@/views/EmployeesIndex.vue";
 import ToolsIndexView from "@/views/ToolsIndex.vue";
 import TasksIndexView from "@/views/TasksIndex.vue";
+import BorrowsIndexView from "@/views/BorrowsIndex.vue";
 
 const routes = [
     {
@@ -60,6 +61,11 @@ const routes = [
       path: '/labores',
       name: 'TasksView',
       component: TasksIndexView,
+    },
+    {
+      path: '/prestamos',
+      name: 'BorrowsView',
+      component: BorrowsIndexView,
     }
   ];
 

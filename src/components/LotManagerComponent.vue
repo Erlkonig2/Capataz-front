@@ -25,17 +25,17 @@
                     <label class="form-label">Cultivo:</label>
                     <multiselect v-model="selectedCrop"
                                  :options="aCrops"
-                                 track-by="name"
+                                 track-by="id"
+                                 label="Nombre"
                                  :searchable="true"
-                                 :preselect-first="true"
-                                 @select="setCropId">
+                                 :preselect-first="true">
 
                         <template v-slot:option="{ option }">
-                            {{ option.name }}
+                            {{ option.Nombre }}
                         </template>
 
                         <template v-slot:singleLabel="{ option }">
-                            {{ option.name }}
+                            {{ option.Nombre }}
                         </template>
 
                         <template v-slot:noResult>
@@ -48,7 +48,7 @@
         </div>
 </template>
 <script>
-import Multiselect from '@vueform/multiselect'
+import Multiselect from 'vue-multiselect';
 
 export default {
 
@@ -79,7 +79,7 @@ export default {
 
             cropsList: [],
             aCrops: [],
-            selectedCrop: '',
+            selectedCrop: null,
             selectedCropId: 0,
 
             buttonText: '',
@@ -145,8 +145,7 @@ export default {
 
                     const { data } = response;
 
-                    this.cropsList = data;
-                    this.aCrops = data.map((crop) => crop.Nombre);
+                    this.aCrops = data;
 
                 }).catch(() => {
 
@@ -170,7 +169,7 @@ export default {
 
                 Nombre: this.name,
                 Tamano: this.size,
-                Cultivo_id: this.selectedCropId,
+                Cultivo_id: this.selectedCrop.id,
 
             };
 
@@ -213,4 +212,3 @@ export default {
 }
 
 </script>
-<style src="@vueform/multiselect/themes/default.css"></style>
